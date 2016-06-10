@@ -9,6 +9,11 @@
     <style>
     body {
       line-height: 20px;
+      /* since the fixed header have a position fixed
+         I am trying to not hide initial content here */
+      padding-top: 32px;
+      /* however, once a user click an anchor,
+         the amount of covered text is unpredicatble */
     }
     header {
       display: block;
