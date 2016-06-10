@@ -1,7 +1,9 @@
-<!DOCTYPE html>
+#!/usr/bin/env bash
+
+echo '<!DOCTYPE html>
 <html>
   <head>
-    <meta charset=utf-8>
+    <meta charset='utf-8'>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <title>WebReflection Web Related Examples</title>
@@ -24,8 +26,14 @@
     </style>
   </head>
   <body>
-    <ul>
-      <li><a href='html-anchors-problem/'>html-anchors-problem</a></li>
-    </ul>
+    <ul>' > index.html
+
+for d in $(ls); do
+  if [ -d $d ]; then
+    echo "      <li><a href='$d/'>$d</a></li>" >> index.html
+  fi
+done
+
+echo '    </ul>
   </body>
-</html>
+</html>' >> index.html
