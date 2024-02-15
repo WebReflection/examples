@@ -1,0 +1,2 @@
+[js_modules.main]
+"https://esm.run/ml5" = "ml5"
