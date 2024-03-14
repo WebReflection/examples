@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Markdown parsing "just standards" example</title>
+  <script type="module">
+    import { marked } from 'https://esm.run/marked';
+
+    document.body.innerHTML = marked(
+      await fetch('./README.md').then(r => r.text())
+    );
+  </script>
+</head>
+</html>
