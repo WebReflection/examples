@@ -1,0 +1,9 @@
+{
+  "private": true,
+  "name": "require-esm",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --experimental-require-module index.js"
+  }
+}
