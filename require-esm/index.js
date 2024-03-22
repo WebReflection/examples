@@ -5,5 +5,8 @@ if (typeof require === "undefined")
   const { ref: aRef } = await require("a");
   const { ref: bRef } = await require("b");
 
-  console.assert(Object.is(aRef, bRef), "hazards detected");
+  console.assert(
+    Object.is(aRef, bRef),
+    `hazard detected: ${aRef} vs ${bRef}`
+  );
 }());
