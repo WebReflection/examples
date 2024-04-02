@@ -1,0 +1,6 @@
+{
+  "type": "module",
+  "dependencies": {
+    "signal-polyfill": "^0.1.0"
+  }
+}
