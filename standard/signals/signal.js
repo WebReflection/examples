@@ -7,24 +7,28 @@ const {
   subtle: { Watcher: W, untrack }
 } = $Signal;
 
+const { toPrimitive } = Symbol;
+
+export const value = Symbol('value');
+
 // for `instanceof Signal` operations (aka: isSignal)
 export class Signal {
-  constructor(_) { this._ = _ }
+  constructor(_) { this[value] = _ }
   // signal == value
-  [Symbol.toPrimitive]() { return this._.get() }
-  valueOf() { return this._.get() }
+  [toPrimitive]() { return this[value].get() }
+  valueOf() { return this[value].get() }
   // the beauty of previous APIs (libraries or standard)
-  peek() { return untrack(() => this._.get()) }
-  toJSON() { return untrack(() => this._.get()) }
+  peek() { return untrack(() => this[value].get()) }
+  toJSON() { return untrack(() => this[value].get()) }
 }
 
 class Computed extends Signal {
-  get value() { return this._.get() }
+  get value() { return this[value].get() }
 }
 
 class State extends Signal {
-  get value() { return this._.get() }
-  set value(value) { this._.set(value) }
+  get value() { return this[value].get() }
+  set value(_) { this[value].set(_) }
 }
 
 const computed = (callback, ...rest) => new Computed(new C(callback, ...rest));
