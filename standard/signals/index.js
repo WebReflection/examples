@@ -16,4 +16,4 @@ counter.value++;
 // is NOT even
 
 effect(() => console.log('fx', isEven.value, counter.value++));
-console.log('out', isEven.value, counter.value++, isEven.value); // 1
+console.log('out', isEven.value, counter.value++, isEven.value);
