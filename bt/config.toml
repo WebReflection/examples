@@ -1,0 +1,7 @@
+[js_modules.main]
+"./js/bt.js" = "bt"
+
+[files]
+"./py/cobs.py" = "/cobs.py"
+"./py/crc.py" = "/crc.py"
+"./py/messages.py" = "/messages.py"

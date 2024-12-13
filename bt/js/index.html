@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>PyScript ❤️ SPIKE Prime</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
+  <style>
+  #matrix td {
+      padding: 0;
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      text-align: center;
+  }
+  </style>
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <h3>PyScript ❤️ SPIKE Prime</h3>
+  <p style="font-size: small">
+    Click ⏻ to connect via Bluetooth &amp; edit or run the program.
+  </p>
+<textarea id="content" rows="12">
+import runloop
+from hub import light_matrix
+
+print("This is shown in devtools console 👋")
+
+async def main():
+    await light_matrix.write("Merry Xmas!")
+
+runloop.run(main())
+</textarea>
+  <button id="show" disabled>run program</button>
+  <button id="connect">⏻</button>
+  <table id="matrix">
+      <tr><td>  </td><td>🟩</td><td>  </td><td>🟩</td><td>  </td></tr>
+      <tr><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td></tr>
+      <tr><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td></tr>
+      <tr><td>  </td><td>🟩</td><td>🟩</td><td>🟩</td><td>  </td></tr>
+      <tr><td>  </td><td>  </td><td>🟩</td><td>  </td><td>  </td></tr>
+  </table>
+</body>
+</html>
