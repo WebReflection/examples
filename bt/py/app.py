@@ -100,7 +100,13 @@ async def show_on_matrix(event):
                     lines = [f" - {x[0]:<10}: {x[1]}" for x in updates]
                     print("\n".join(lines))
                     for row in message.messages:
-                        if row[0] is "5x5":
+                        if row[0] is "IMU":
+                            x, y, z = row[1][3:6]
+                            print(x, y, z)
+                            js.cube.rotation.x = x / 10
+                            # js.cube.rotation.y = y / 10
+                            # js.cube.rotation.z = z / 10
+                        elif row[0] is "5x5":
                             x = 0
                             y = 0
                             rows = document.querySelectorAll("#matrix tr")
