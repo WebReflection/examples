@@ -21,15 +21,17 @@ import {
 } from './messages.js';
 import { crc } from './crc.js';
 
-const DEVICE_NOTIFICATION_INTERVAL_MS = 500;
+const DEVICE_NOTIFICATION_INTERVAL_MS = 100;
 const EXAMPLE_SLOT = 0;
 
 const Future = () => Promise.withResolvers();
 
 const bt = new BT;
-const button = document.querySelector('#connect')
-const content = document.querySelector('#content')
-const show = document.querySelector('#show')
+const button = document.querySelector('#connect');
+const content = document.querySelector('#content');
+const show = document.querySelector('#show');
+
+globalThis.prime = {"yaw": 0.0, "pitch": 0.0, "roll": 0.0, "matrix": []};
 
 const show_on_matrix = async event => {
   const EXAMPLE_PROGRAM = text.encode(content.value.trim());
@@ -59,9 +61,16 @@ const show_on_matrix = async event => {
         if (message instanceof DeviceNotification) {
           const { messages } = message;
           messages.sort(([a], [b]) => a.localeCompare(b));
-          console.log(messages.map(([key, value]) => ` - ${key.padEnd(10)}: [${value.join(', ')}]`).join('\n'));
+          // console.log(messages.map(([key, value]) => ` - ${key.padEnd(10)}: [${value.join(', ')}]`).join('\n'));
           for (const [key, values] of messages) {
-            if (key === '5x5') {
+            if (key === 'IMU') {
+              const [yaw, pitch, roll] = values.slice(3, 6);
+              prime["yaw"] = yaw / 10
+              prime["pitch"] = pitch / 10
+              prime["roll"] = roll / 10
+            }
+            else if (key === '5x5') {
+              prime.matrix = values;
               const rows = document.querySelectorAll("#matrix tr");
               let x = 0, y = 0;
               for (const value of values.slice(1)) {
