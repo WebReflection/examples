@@ -33,11 +33,13 @@ from pyscript.js_modules.bt import default as BT
 from pyscript import document
 import js
 
+js.prime = {"yaw": 0.0, "pitch": 0.0, "roll": 0.0, "matrix": ()}
+
 import cobs
 from messages import *
 from crc import crc
 
-DEVICE_NOTIFICATION_INTERVAL_MS = 500
+DEVICE_NOTIFICATION_INTERVAL_MS = 100
 """The interval in milliseconds between device notifications"""
 
 EXAMPLE_SLOT = 0
@@ -98,15 +100,16 @@ async def show_on_matrix(event):
                     updates = list(message.messages)
                     updates.sort(key=lambda x: x[1])
                     lines = [f" - {x[0]:<10}: {x[1]}" for x in updates]
-                    print("\n".join(lines))
+                    # print("\n".join(lines))
                     for row in message.messages:
                         if row[0] is "IMU":
-                            x, y, z = row[1][3:6]
-                            print(x, y, z)
-                            js.cube.rotation.x = x / 10
-                            # js.cube.rotation.y = y / 10
-                            # js.cube.rotation.z = z / 10
+                            yaw, pitch, roll = row[1][3:6]
+                            # print({ "yaw": yaw / 10, "pitch": pitch / 10, "roll": roll / 10 })
+                            js.prime["yaw"] = yaw / 10
+                            js.prime["pitch"] = pitch / 10
+                            js.prime["roll"] = roll / 10
                         elif row[0] is "5x5":
+                            js.prime["matrix"] = row[1]
                             x = 0
                             y = 0
                             rows = document.querySelectorAll("#matrix tr")
@@ -117,6 +120,8 @@ async def show_on_matrix(event):
                                 if x is 5:
                                     x = 0
                                     y += 1
+                        # else:
+                        #     print(f"{row}")
 
                 elif ending_response is not None and isinstance(message, ProgramFlowNotification):
                     ending_response.resolve()

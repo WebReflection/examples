@@ -5,7 +5,16 @@
   <title>PyScript ❤️ SPIKE Prime</title>
   <meta name="viewport" content="width=device-width,initial-scale=1.0">
   <link rel="stylesheet" href="https://matcha.mizu.sh/matcha.css">
+  <link rel="stylesheet" href="https://pyscript.net/releases/2024.11.1/core.css">
   <style>
+  #extras {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+  }
+  #matrix {
+    margin: 0;
+  }
   #matrix td {
       padding: 0;
       width: 24px;
@@ -14,7 +23,9 @@
       text-align: center;
   }
   </style>
-  <script type="module" src="./app.js"></script>
+  <script type="module" src="https://pyscript.net/releases/2024.11.1/core.js"></script>
+  <script type="module" src="three.js"></script>
+  <script type="module" src="app.js"></script>
 </head>
 <body>
   <h3>PyScript ❤️ SPIKE Prime</h3>
@@ -28,18 +39,22 @@ from hub import light_matrix
 print("This is shown in devtools console 👋")
 
 async def main():
-    await light_matrix.write("Merry Xmas!")
+    await light_matrix.write("SPIKE Prime!")
 
 runloop.run(main())
 </textarea>
   <button id="show" disabled>run program</button>
   <button id="connect">⏻</button>
-  <table id="matrix">
+  <hr />
+  <div id="extras">
+    <table id="matrix">
       <tr><td>  </td><td>🟩</td><td>  </td><td>🟩</td><td>  </td></tr>
       <tr><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td></tr>
       <tr><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td><td>🟩</td></tr>
       <tr><td>  </td><td>🟩</td><td>🟩</td><td>🟩</td><td>  </td></tr>
       <tr><td>  </td><td>  </td><td>🟩</td><td>  </td><td>  </td></tr>
-  </table>
+    </table>
+    <div id="canvas"></div>
+  </div>
 </body>
 </html>
