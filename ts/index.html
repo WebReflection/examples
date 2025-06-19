@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TS on the fly via Service Worker</title>
+  <script>
+    (({ navigator: { serviceWorker: s } }) => {
+      s.register('tsw.js', { type: 'module', scope: '.' }).then(r => {
+        r.addEventListener('updatefound', () => location.reload());
+        if (r.active && !s.controller) location.reload();
+      });
+    })(self);
+  </script>
+</head>
+<body>
+  <h1>TS on the fly via Service Worker</h1>
+  <script type="module">
+    import string from './string.ts';
+    import num from './num.ts';
+    document.body.append(string, ' and number ', num);
+  </script>
+</body>
+</html>
