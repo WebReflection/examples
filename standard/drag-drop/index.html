@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drag & Drop type</title>
+  <style>
+    .drop-target {
+      background-color: lightgray;
+      color: darkgray;
+      border: 1px solid silver;
+      height: 100px;
+    }
+    .drop-target.hover {
+      border: 1px solid blue;
+    }
+  </style>
+</head>
+<body>
+  <div
+    class="drop-target"
+    ondragover="event.preventDefault()"
+    ondrop="
+      event.preventDefault();
+      this.classList.remove('hover');
+      this.nextElementSibling.append(`${event.dataTransfer?.types.join(', ')} \n`);
+    "
+    ondragenter="this.classList.add('hover')"
+    ondragleave="this.classList.remove('hover')"
+  >
+    drop files here
+  </div>
+  <pre class="log"></pre>
+</body>
+</html>
