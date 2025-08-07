@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>GistFS Demo</title>
+        <link rel="stylesheet" href="./index.css">
+        <script type="module" src="./a-tree.js"></script>
+        <script type="module" src="./index.js"></script>
+        <link rel="stylesheet" href="https://pyscript.net/releases/2025.8.1/core.css">
+        <script type="module" src="https://pyscript.net/releases/2025.8.1/core.js"></script>
+    </head>
+    <body>
+      <div id="tree">
+        <div id="authentication">
+          <input type="password" placeholder="GitHub Token">
+          <button>Authentication</button>
+        </div>
+        <div id="list"></div>
+      </div>
+      <div id="content">
+        <div id="file">
+          <input id="file_name" type="text" placeholder="File Name">
+          <button id="file_save">Save</button>
+        </div>
+        <textarea id="editor" rows="10"></textarea>
+      </div>
+    </body>
+</html>
