@@ -4,25 +4,160 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
-  <link rel="stylesheet" href="tree.css">
   <script>
+    const interpolateSize = CSS.supports('interpolate-size:allow-keywords');
+
+    const count = (curr, { classList, lastElementChild }) => (
+      curr + 1 + (
+        classList.contains('folder') && classList.contains('opened') ? reduce(lastElementChild) : 0
+      )
+    );
+
+    const reduce = ({ children }) => [].reduce.call(children, count, 0);
+
+    const transitionend = event => {
+      event.stopImmediatePropagation();
+      for (const ul of event.currentTarget.closest('.tree').querySelectorAll('ul'))
+        ul.style.height = ul.parentElement.classList.contains('opened') ? 'auto' : '0px';
+    };
+
     function scafold(event) {
+      event.preventDefault();
       const li = event.target?.closest('li');
-      if (li?.classList.contains('folder')) {
+      const button = li?.querySelector('button');
+      if (!li || button.disabled) return;
+      if (li.classList.contains('folder')) {
+        if (!interpolateSize) {
+          const opened = li.classList.contains('opened');
+          const ul = li.querySelector('ul');
+          ul.addEventListener('transitionend', transitionend);
+          ul.style.height = opened ? getComputedStyle(ul).height : `${parseFloat(getComputedStyle(li).height) * reduce(ul)}px`;
+        }
         li.classList.toggle('opened');
       }
+      if (button !== document.activeElement)
+        button.focus();
     }
   </script>
+  <style>
+.tree, .tree *, .tree *::before, .tree *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  margin-inline: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.tree {
+  /* Firefox or Safari need this */
+  --shenanigap: 4px;
+  --icon-size: 12px;
+  --svg-opened: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><path d="M8 12h8" /></svg>');
+  --svg-closed: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision"><rect x="3" y="3" width="18" height="18" rx="2" ry="2" /><path d="M12 8v8" /><path d="M8 12h8" /></svg>');
+  --svg-folder: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision"><path d="M2.707 7.454V5.62C2.707 4.725 3.469 4 4.409 4h4.843c.451 0 .884.17 1.204.474l.49.467c.126.12.296.186.473.186h8.399c.94 0 1.55.695 1.55 1.59v.737m-18.661 0h-.354a.344.344 0 00-.353.35l.508 11.587c.015.34.31.609.668.609h17.283c.358 0 .652-.269.667-.61L22 7.805a.344.344 0 00-.353-.35h-.278m-18.662 0h18.662"></path></svg>');
+  --svg-file: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"></path><path d="M13 2v7h7"></path></svg>');
+  interpolate-size: allow-keywords;
+  list-style-position: inside;
+  padding: 0 8px 0 8px;
+  padding-inline-start: calc(var(--icon-size) * 2);
+}
+
+/* Chrome/ium doesn't need this */
+@supports (interpolate-size: allow-keywords) {
+  .tree {
+    --shenanigap: 0px;
+  }
+}
+
+.tree li {
+  cursor: pointer;
+  user-select: none;
+}
+
+.tree button {
+  appearance: none;
+  border: none;
+  background: none;
+  color: inherit;
+  font: inherit;
+  cursor: inherit;
+  user-select: text;
+  border: 0;
+  padding: 4px;
+  outline-offset: -1px;
+  border-radius: 4px;
+  margin: 2px;
+  background: none;
+  margin-inline-start: -4px;
+  &:focus {
+    outline: 1px dotted;
+  }
+}
+
+.tree ul > li {
+  margin-block-start: -1px;
+  margin-inline-start: 0px;
+  border-inline-start: 1px transparent;
+  padding-inline-start: calc(var(--icon-size));
+  margin-inline-start: calc(var(--icon-size) / 2);
+}
+
+.tree ul > li.file {
+  border-inline-start: 1px dotted;
+}
+
+.tree li.folder.opened::before {
+  background-image: var(--svg-opened);
+}
+
+.tree li.file {
+  list-style-image: var(--svg-file);
+}
+
+.tree li.folder {
+  list-style-image: var(--svg-folder);
+  &::before {
+    display: inline-block;
+    content: '';
+    width: 12px;
+    height: 12px;
+    background-image: var(--svg-closed);
+    margin-inline-start: calc(-32px - var(--shenanigap));
+    margin-inline-end: 18px;
+  }
+}
+
+.tree li.folder > ul {
+  overflow: clip;
+  visibility: hidden;
+  height: 0;
+  transition: height .3s ease, visibility .3s;
+}
+
+.tree li.folder.opened > ul {
+  visibility: visible;
+  height: auto;
+}
+
+.tree li.folder:not(.opened) ul {
+  visibility: hidden;
+}
+
+/* ------------------------------------------------------ */
+
+.tree-container {
+  border: 1px dotted;
+  border-radius: 4px;
+  font-family: system-ui, sans-serif;
+  font-size: 1rem;
+}
+
+  </style>
 </head>
 <body>
-  <div>
+  <div class="tree-container">
     <ul class="tree" onclick="scafold(event)">
       <li class="folder opened">
-        <svg class="toggle" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-          <path class="y" d="M12 8v8" />
-          <path class="x" d="M8 12h8" />
-        </svg>
         <button>Folder</button>
         <ul>
           <li class="file">
@@ -34,11 +169,6 @@
         </ul>
       </li>
       <li class="folder">
-        <svg class="toggle" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision">
-          <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-          <path class="y" d="M12 8v8" />
-          <path class="x" d="M8 12h8" />
-        </svg>
         <button>Folder</button>
         <ul>
           <li class="file">
@@ -50,19 +180,39 @@
           <li class="file">
             <button>File</button>
           </li>
-          <li class="folder">
-            <svg class="toggle" viewBox="0 0 24 24" width="12" height="12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" fill="none" shape-rendering="geometricPrecision">
-              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-              <path class="y" d="M12 8v8" />
-              <path class="x" d="M8 12h8" />
-            </svg>
+          <li class="folder opened">
             <button>Folder</button>
             <ul>
               <li class="file">
                 <button>File</button>
               </li>
-              <li class="file">
-                <button>File</button>
+              <li class="folder opened">
+                <button>Folder</button>
+                <ul>
+                  <li class="folder opened">
+                    <button>Folder</button>
+                    <ul>
+                      <li class="file">
+                        <button>File</button>
+                      </li>
+                      <li class="file">
+                        <button>File</button>
+                      </li>
+                      <li class="file">
+                        <button>File</button>
+                      </li>
+                      <li class="file">
+                        <button>File</button>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="file">
+                    <button>File</button>
+                  </li>
+                  <li class="file">
+                    <button>File</button>
+                  </li>
+                </ul>
               </li>
               <li class="file">
                 <button>File</button>

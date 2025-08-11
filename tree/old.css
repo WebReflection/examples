@@ -1,0 +1,89 @@
+.tree, .tree *, .tree *::before, .tree *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  margin-inline: 0;
+}
+
+.tree {
+  /* 12px in Firefox */
+  --padding: 11px;
+  interpolate-size: allow-keywords;
+  margin: 0;
+  list-style-position: inside;
+  padding-inline-start: calc(var(--padding) * 3);
+}
+
+.tree ul {
+  padding-inline-start: calc(var(--padding) * 3.5);
+}
+
+.tree li {
+  cursor: pointer;
+  margin: 0;
+  padding: 0;
+}
+
+.tree li.file {
+  list-style-image: url('./file.svg');
+}
+
+.tree ul li {
+  margin-inline-start: calc(var(--padding) * -3);
+  padding-inline-start: calc(var(--padding) * 1.7);
+}
+
+.tree ul li.file {
+  border: none;
+  border-left-style: dotted;
+  border-left-width: 1px;
+  margin-block-start: -1px;
+}
+
+.tree li.folder {
+  list-style-image: url('./folder.svg');
+}
+
+.tree li.folder.opened {
+  list-style-image: url('./folder.svg');
+}
+
+
+.tree li.folder .toggle {
+  margin-inline-start: calc(var(--padding) * -4);
+  margin-inline-end: calc(var(--padding) * 2.5);
+  /* margin-inline-start: calc(var(--padding) * -6);
+  margin-inline-end: calc(var(--padding) * 6); */
+}
+
+.tree li.folder.opened > .toggle .y {
+  display: none;
+}
+
+.tree li.folder > ul {
+  visibility: hidden;
+  height: 0;
+  overflow: clip;
+  transition: height .3s ease, visibility .3s ease;
+}
+
+.tree li.folder.opened > ul {
+  visibility: visible;
+  height: auto;
+}
+
+.tree button {
+  appearance: none;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: inherit;
+  padding: calc(var(--padding) / 2);
+  border-radius: 4px;
+}
+
+.tree button:focus {
+  outline-style: dotted;
+  outline-width: 1px;
+  outline-offset: -1px;
+}
