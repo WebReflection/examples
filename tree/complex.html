@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="tree.css">
+  <script type="module">
+    import { Tree, File, Folder } from './tree.js';
+
+    const tree = new Tree;
+    document.body.appendChild(tree);
+
+    const a = new Folder('a');
+    a.append('b.txt');
+    const c = new File([], 'c.txt', { type: 'text/plain' });
+
+    tree.append(a, c);
+
+    setTimeout(() => tree.rename(c, 'c.txt'), 1000);
+  </script>
+  <style>
+    file-tree {
+      border: 1px dotted rgb(from currentColor r g b / .2);
+      border-radius: 4px;
+      font-family: system-ui, sans-serif;
+      font-size: 1rem;
+      visibility: var(--visibility, hidden);
+    }
+  </style>
+</head>
+<body>
+  <file-tree>
+    <ul><li class="folder opened"><button>Folder dwiaojdwj</button><ul><li class="file"><button>File dkwpoakd ad</button></li><li class="file"><button>File_aiwjdoiwj_jdiwjidwjijdwjdiwi</button></li></ul></li><li class="folder">
+        <button>Folder jwaoid oiwadji</button>
+        <ul>
+          <li class="file">
+            <button>File dwaoidoiwajd as</button>
+          </li>
+          <li class="file">
+            <button>File dwia jdwoij</button>
+          </li>
+          <li class="file">
+            <button>File dwoiaj dwoij</button>
+          </li>
+          <li class="folder opened">
+            <button>Folder diowajdowij</button>
+            <ul>
+              <li class="file">
+                <button>File dwaoijdoiw</button>
+              </li>
+              <li class="folder opened">
+                <button>Folder oidwjaoidj</button>
+                <ul>
+                  <li class="folder opened">
+                    <button>Folder dsakk k  dw kdoko</button>
+                    <ul>
+                      <li class="file">
+                        <button>File kdwao dokok</button>
+                      </li>
+                      <li class="file">
+                        <button>File dwaokdok</button>
+                      </li>
+                      <li class="file">
+                        <button>File dwapo kokdwoa</button>
+                      </li>
+                      <li class="file">
+                        <button>File dkwodokw dwskk</button>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="file">
+                    <button>File dwaodk</button>
+                  </li>
+                  <li class="file">
+                    <button>File dwkdaokokok kokos</button>
+                  </li>
+                </ul>
+              </li>
+              <li class="file">
+                <button>File dwjaidjoij jdiwa</button>
+              </li>
+              <li class="file">
+                <button>File kdwaodko</button>
+              </li>
+            </ul>
+          </li>
+          <li class="file">
+            <button>File kdwaodowakopdwk</button>
+          </li>
+        </ul>
+      </li>
+      <li class="file">
+        <button>File dkwapoodpkokdwaok okok</button>
+      </li>
+    </ul>
+  </file-tree>
+  <hr>
+  <!-- <div class="tree-container">
+    <ul class="tree" onclick="scafold(event)">
+      <li class="folder opened">
+        <button>Folder dwiaojdwj</button>
+        <ul>
+          <li class="file">
+            <button>File dkwpoakd ad</button>
+          </li>
+          <li class="file">
+            <button>File_aiwjdoiwj_jdiwjidwjijdwjdiwi</button>
+          </li>
+        </ul>
+      </li>
+      <li class="folder">
+        <button>Folder jwaoid oiwadji</button>
+        <ul>
+          <li class="file">
+            <button>File dwaoidoiwajd as</button>
+          </li>
+          <li class="file">
+            <button>File dwia jdwoij</button>
+          </li>
+          <li class="file">
+            <button>File dwoiaj dwoij</button>
+          </li>
+          <li class="folder opened">
+            <button>Folder diowajdowij</button>
+            <ul>
+              <li class="file">
+                <button>File dwaoijdoiw</button>
+              </li>
+              <li class="folder opened">
+                <button>Folder oidwjaoidj</button>
+                <ul>
+                  <li class="folder opened">
+                    <button>Folder dsakk k  dw kdoko</button>
+                    <ul>
+                      <li class="file">
+                        <button>File kdwao dokok</button>
+                      </li>
+                      <li class="file">
+                        <button>File dwaokdok</button>
+                      </li>
+                      <li class="file">
+                        <button>File dwapo kokdwoa</button>
+                      </li>
+                      <li class="file">
+                        <button>File dkwodokw dwskk</button>
+                      </li>
+                    </ul>
+                  </li>
+                  <li class="file">
+                    <button>File dwaodk</button>
+                  </li>
+                  <li class="file">
+                    <button>File dwkdaokokok kokos</button>
+                  </li>
+                </ul>
+              </li>
+              <li class="file">
+                <button>File dwjaidjoij jdiwa</button>
+              </li>
+              <li class="file">
+                <button>File kdwaodko</button>
+              </li>
+            </ul>
+          </li>
+          <li class="file">
+            <button>File kdwaodowakopdwk</button>
+          </li>
+        </ul>
+      </li>
+      <li class="file">
+        <button>File dkwapoodpkokdwaok okok</button>
+      </li>
+    </ul>
+  </div> -->
+</body>
+</html>
