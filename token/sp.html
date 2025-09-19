@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>secrets.pub - test interface</title>
+  <script type="module" src="https://secrets-pub.fly.dev/module" crossorigin="use-credentials"></script>
+  <script type="importmap">{"imports":{"secrets.pub":"https://secrets-pub.fly.dev/module"}}</script>
+  <script type="module">
+    import secrets from 'secrets.pub';
+
+    console.time('secrets.pub');
+    const value1 = await secrets.get({ service: 'gist', name: 'fs' });
+    console.timeEnd('secrets.pub');
+    console.log(value1);
+    console.time('secrets.pub');
+    const value2 = await secrets.get({ service: 'gist', name: 'fs' });
+    console.timeEnd('secrets.pub');
+    console.assert(value1 === value2, 'values are not the same');
+  </script>
+</head>
+</html>
