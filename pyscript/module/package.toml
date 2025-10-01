@@ -1,0 +1,9 @@
+name = "custom_package"
+
+packages = ["matplotlib"]
+
+[js_modules.main]
+"./package.js" = "custom_package"
+
+[files]
+"./package.py" = "custom_package.py"
