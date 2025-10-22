@@ -1,0 +1,12 @@
+name = "ble"
+
+[files]
+"https://chrisrogers.pyscriptapps.com/talking-on-a-channel/latest/py/channel.py" = "./channel.py"
+"https://chrisrogers.pyscriptapps.com/talking-to-a-hub/latest/py/Hub.py" = "./Hub.py"
+"https://chrisrogers.pyscriptapps.com/talking-to-a-hub/latest/py/pyConst.py" = "./pyConst.py"
+"https://chrisrogers.pyscriptapps.com/talking-to-a-hub/latest/py/SpikePrime.py" = "./SpikePrime.py"
+"https://chrisrogers.pyscriptapps.com/talking-to-a-hub/latest/py/TechElement.py" = "./TechElement.py"
+"https://chrisrogers.pyscriptapps.com/talking-to-a-hub/latest/py/TechElement_EP2.py" = "./TechElement_EP2.py"
+
+[js_modules.main]
+"https://chrisrogers.pyscriptapps.com/talking-to-a-hub/latest/js/ble2.js" = "ble"
